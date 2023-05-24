@@ -1,0 +1,8 @@
+emre 1000
+hasan 2520
+ayşe 9500
+ali 1422
+mehmet 952
+yücel 1650
+sinem 9852
+ezgi 4562

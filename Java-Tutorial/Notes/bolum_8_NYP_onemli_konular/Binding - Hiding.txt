@@ -1,0 +1,94 @@
+ Binding:
+1. Static Binding (Early Binding, Erken bağlama) : Compiler time'da bind edilir.
+2. Dynamic Binding (Late Binding, Geç Bağlama) : Run time'da bind edilir.
+
+ Static Binding: Override edilmeyen şeyler compiler time da bind edilir.
+- Private, final ve static methodlar override edilemeyeceğinden dolayı compiler time'da bind edilir.
+
+ Dynamic Binding: Override edilebilenler de run time'da bind edilir.
+- Non-private, non-final ve non-static methodlar override edilebileceğinden dolayı run time'da bind edilir.
+
+Not: Değişkenlerin tamamı, compiler time'da bind edilir.
+
+
+GeometrikSekil gs = new Kare();
+Kare k = gs; 
+// Her ne kadarda gs degiskeni Kare tipindeki bir referans tutsa da editör gs'nin kare tuttuğunu bilmez. Bunu run time'da 
+// değer atadıktan sonra öğrenir.
+// Bundan dolayı biz bu kodu yazdığımızda editör hata verir. (gs nin GeometrikSekil tipinde 
+// bir referans tuttuğunu sanıyor, Kare tipinde referans tuttuğunu bilmiyor.)
+
+ Javada Değişken Tipleri:
+1. Local Variables: Bir method veya block içinde tanımlanmış olan değişkenlerdir. Local değişkenler, static olarak tanımlanamaz.
+2. Instance Variables: Örnek değişkenler bir sınıfın içinde ancak bir methodun dışında tanımlanan değişkenlerdir. Bu değişkenler
+static olarak bildirilirse, artık örnek değişken olmaktan çıkar ve sınıf değişkeni olur. Instance değişkenler, bir nesne oluşturulduğunda
+oluşur ve nesne yok edildiğinde yok olurlar.
+3. Class Variables: Bir sınıfın içinde ancak bir methodun dışında static olarak bildirilen değişkenlere denir. Varlığı nesneye
+bağlı değildir ve program başladığında oluşur, program bittiğinde yok edilir. Bu değişkenelere static variables'da denir.
+
+ Variable Hiding:
+- Değişken gizleme, iç scope'daki değişken ve dış scope'daki değişkenin adı aynı ise iç scope'daki değişken, dış scope'daki değişkeni
+gizler. Aynı isimlerdeki değişkenlerin veri türü farklı olsa bile bir değişken diğer değişkeni gizleyebilir.
+- Bir diğer variable hiding ise alt sınıfta tanımlanan değişkenin üst sınıftaki değişkenle aynı isimde olması sonucu oluşur.(Veri tipi önemli değil)
+Alt sınıftaki değişken üst sınıftaki değişkeni gizler.
+
+public class VariableAndMethodHinding {
+    int sayi = 1; // Bu değişken gizlendi.
+    public static void main(String[] args) {
+        int sayi = 2; // Bu değişken, global scope'taki değişkeni gizledi.
+        System.out.println(sayi); // 2  
+    }
+}
+
+--------------
+
+class ParentClass {
+    int x = 1;
+    static int y = 1;
+
+    public void parentPrint() {
+        System.out.println(x);
+    }
+
+    public static void parentStaticPrint() {
+        System.out.println(y);
+    }
+}
+
+class ChildClass extends ParentClass {
+    int x = 10;
+    static int y = 10;
+
+    public void print() {
+        System.out.println(x);
+    }
+
+    public static void childStaticPrint() {
+        System.out.println(y);
+    }
+
+}
+
+	   ParentClass parentClass = new ParentClass();
+        ChildClass childClass = new ChildClass();
+        ParentClass karisik = new ChildClass();
+
+        parentClass.parentPrint(); // 1
+        childClass.print(); // 10
+        childClass.parentPrint(); // 1
+        ((ChildClass) karisik).print(); // 10
+        karisik.parentPrint(); // 1
+
+        System.out.println("-------");
+
+        System.out.println(parentClass.y); // 1
+        System.out.println(childClass.y); // 10
+        System.out.println(karisik.y); // 1
+
+        System.out.println("-------");
+        parentClass.parentStaticPrint(); // 1
+        childClass.childStaticPrint(); // 10
+        karisik.parentStaticPrint(); // 1
+        ((ChildClass)karisik).childStaticPrint(); // 10
+
+

@@ -1,0 +1,157 @@
+  Az Kod Çok İş İçin Bilinmesi Gereken Yapılar
+
+ Kompozisyon: Daha önceden yazılmış olan sınıfı yeni bir sınıf içinde kullanmak. 
+Aslında biz bu kavramı bu zamana kadar bilmeyerek sık sık kullandık. String javacılar tarafından yazılmış bir classtır 
+ve biz projelerimizde bu sınıfı sık sık kullandık.
+
+! Kompozisyon sayesinde biz kodlarımızı azaltarak az kod çok iş prensibini gerçeklemiş oluruz.
+(String classını tekrar yazmak yerine kullanıyorum.)
+
+ NOT: Kompozisyonda has - a ilişkisi, Kalıtımda Is - a ilişkisi vardır.
+
+ Kalıtım (Intehitance): Yeni oluşturacağımız sınıfı daha önce yazılmış sınıftan türetmek.
+
+ Önemli Not: Java çoklu kalıtmı destekliyor mu ? 
+			Cevap: Evet ! Ancak sınıflar üzerinden değil. Interface'ler üzerinden.
+ Not: Javada bir sınıf kendi kendini miras alamaz.
+
+ Not: Alt sınıftan nesne olustugunda otomatik olarak üst sınıfın default const. calisir. 
+ Eger üst sınıfta default constructor yoksa super anahtar kelimesini kullanarak üst sınıfın 
+ const.ını biz cagiririz. (first statement'da olmalı.)
+ 
+ Miras Alınabilenler - Alınamayanlar (Inherit edilebilenler - edilemeyenler):
+
+1. Private Üyeler Miras Alınamaz:
+	- Şimdi şöyle bir senaryomuz olsun; 
+	Bir A classı ve B classımız var. B classı, A classını extend ediyor. Yani B, A'nın alt classı.
+	A classının içinde private tanımlanan bir değişken var ve A classı public getter ve setter methodlarına sahip değil.
+	Şimdi B classının içinden veya B classından üretilen bir objeden, bu A classı içindeki private değişkene erişim
+	mümkün olmayacaktır.
+	Ancak;
+	A classının içinde, x'e erişebilmek için public getter-setter methodları olsaydı biz bu A classının içindeki private
+	x değişkenine, B classının içinden veya B classından üretilen bir obje üzerinden erişebilirdik.
+
+	Şimdi kilit nokta burası: Java documentlerinde private alanlar miras alınamaz yazıyor. Argümanları ise şu:
+	- public olan getter ve setter methodlarını kullanmazsak biz bu x değişkenine hiçbir türlü erişim yapamıyoruz.
+	E bundan dolayı erişemidiğim ve kullanamadığım bir şeye nasıl miras alınmıştır diyebilirim ki ? Private olmayan
+	değişkenlere alt sınıf üzerinden direkt erişebiliyorum ama private değişkenlere erişemiyorum. E şimdi ben non-private
+	değişkenle erişebiliyorum ve onlar için miras alabildim diyorsam, private değişkenlere erişemiğim halde neden onlara
+	miras alabildim diyeyim ki ? Bu yüzden onlar miras alınmamıştır.
+
+	Akla şu soru geliyor-> 'İyide kardeşim sen de getter ve setter methodlarını kullan ?'
+	- Tamam, getter ve setter methodlarını kullanırsam ben private alanlarada erişebiliyorum. Ancak yine de bunları
+	miras aldım diyemem. Çünkü; Burada gerçekleşen şey encapsulation'dır. private alana erişebilmemdeki marifet
+	miras alma konseptinden değil, encapsulation konseptinden kaynaklanır. Bu yüzden private alanlar miras alınamaz
+	deriz.
+
+	Önemli Not: Evet biz private alanları miras alamıyoruz diyoruz ancak; Alt sınıftan bir nesne ürettiğimde bu alt sınıf
+	nesnesinin içinde, üst sınıftaki private değişken için bellekte bir yer ayrılır. Eğer üst sınıftaki private değişken,
+	bellekte çok büyük yer kaplayan bir alan ise şuna dikkat etmen gerekiyor;
+	Ben alt sınıfta nesne oluşturduğumda, üst sınıftaki private alan içinde bu nesnenin içinde bir alan tahsis edilecektir.
+	Yani; üst sınıftaki private alanlarda, alt sınıf nesnesinin içinde vardır. Dolasıyla alt sınıftan nesne oluşturduğumuzda
+	bellekte bu private alan içinde bir yer ayrılır. Ancak yinede yukarıda yazdığım argümanlara dayanarak java documentleri
+	private değişkenlerin miras alınamayacağını söylüyor.
+
+	Tek Cümleyle Özet: Alt sınıftan nesne oluşturduğumda, üst sınıftaki private alanlar içinde bellekte yer ayrılır ve bu
+	demek oluyor ki alt sınıf nesneni, üst sınıftaki private alanlara sahip ancak private alanlara encapsulation konsepti
+	kullanılmadan erişim gerçekleşemeyeceğinden dolayı bu alanlar miras alınamaz deriz.
+
+2. Default Erişim Belirleyicisine sahip alanlar, başka bir paket içindeki alt sınıflar tarafından miras alınamazlar:
+	- Private olayındaki gibi bir mantık var. Default tanımlanmış alanlar, alt sınıftan oluşturduğum nesneler için
+	bellekte yer tutarlar ancak; alt sınıf başka bir pakette tanımlanmışsa, üst classta default tanımlanan bu değişken
+	lere erişim gerçekleştiremeyeceğimiz için miras alınamamıştır diyoruz. 
+	(Ancak yinede alt sınıftan üretilen objelerin içinde bellekte yer kaplıyorlar.)
+
+3. Constructorlar ve Initializer bloklar miras alınamaz:
+	- Miras almak demek, üst sınıfın memberlarını devralmak demektir.
+	- Constructolar ve initializer bloklar (instance bloks and static bloks) üst sınıfın bir üyesi sayılmadığından dolayı
+	miras alınamazlar.
+
+4. Static alanlar, alt sınıfta aynı şekilde tanımlanmadıkları sürece miras alınabilir:
+	- Üst sınıftaki static bir alan, alt sınıfta aynı şekilde tanımlanırsa üst sınıftaki alan gizlenmiş olur (method hiding) ve alt 
+	sınıf adıyla veya alt sınıfın bir objesiyle üst sınıftaki alana erişemeyiz. Bu yüzden üst classtaki static alan,
+	alt classta bire bir olarak tanımlanmadığı sürece miras alınır ancak birebir tanımlanırsa miras alınamaz.
+	Not: Ancak yine de üst sınıfın adını kullanarak bu üst sınıftaki static alana erişebiliriz.
+	Not: Eğer alt sınıfla üst sınıftaki statik alan aynı tanımlanmışsa burada override edilmiş olmuyor. Üst sınıfın static alanı
+	gizlenmiş oluyor ve bu ikisi bam baska iki method oluyor.
+
+Önemli Not: Üst sınıfın alanları gizlersek yani method hiding veya variable hiding yaparsak bu alanları miras almamış oluruz. Sebebi:
+- Alt sınıflardan, bu üst sınıflardaki alanlara erişemiyor olmamız. Eğer miras almış olsaydık bu alanlara erişebilirdik.
+Örnek:
+class A {
+    int i = 10;
+}
+
+class B extends A {
+    int i = 20;
+}
+
+public class MainClass {
+    public static void main(String[] args) {
+        B b = new B();
+
+        System.out.println(b.i);
+    }
+}
+
+Burada B classındaki 'i' değişkeni, A classındaki 'i' değişkenini gizlemiştir. Bu demek oluyor ki B classı, A classındaki 'i' alanını
+miras alamamıştır.
+
+Kalıtımda is - a ilişkisi vardır.
+
+ Ne zaman kalıtım kullanılmalı ? 
+Eğer yeni sınıf bir eski sınıf mıdır? sorusuna cevap evet ise kalıtım kullanılır. (Aslan bir hayvan mıdır? ) (is - a)
+
+class Aslan extends Hayvan{} -> Aslan classı Hayvan classından türetilmiştir.
+
+! Javada her sınıf object dediğimiz bir sınıftan gizli ve otomatik şekilde kalıtılır.
+! Oluşturduğumuz her sınıf object sınıfının metotlarına sahip olur. Bunlardan bazıları:
+
+1. clone: Nesneyi kopyalar.
+equals(Object obj) : obj ye bağlı olan nesnenin kendisine eşit olup 
+olmadığını söyler.
+3. finalize() : Çöp toplayıcı tarafından silinmeden önce çalıştırılır.
+4. hashCode(): Nesnenin hash kodunu verir. hasCode degerini objeler icin ID 
+degeri olarak dusunebiliriz. Obje değiştikçe hashcode da değişir.
+5. toString(): İlgili nesneyi string olarak ifade etmek için kullanılır. 
+(Nesne ekrana basıldığında otomatik olarak çalıştırılır ve bunun return ettiği değeri ekranda görürüz.)
+
+! Javada çoklu kalıtıma izin verilmez. (Sınıfar üzerinden vermiyor, Interface'ler üzerinden veriyor.)
+! Kalıtım demek bir sınıfın başka bir sınıfı kopyalaması demek değildir. 
+Kalıtım: Bir sınıfın türetildiği sınıfın alanlarına erişebilmesi ve gerekirse kendi alanlarını
+oluşturabilmesi demektir.
+
+KopekBalik > Balik > Hayvan > Object bu yapıda bir kopek balığı nesnesi 
+oluşturulmadan önce mutlaka önce object sonra hayvan sonra balik sınıfı
+constructor metotu çalıştırılır. En son kopek balığının kurucu metotu çalıstırılır.
+
+Not : super() -> bir üst sınıfa ait const. cağırır. Bu keywordde this()' de oldugu ilk first statement olmalı.
+
+Method Override:
+	- Üst sınıfa ait bir metotun alt sınıflarca tekrar yazılmasına method overriding 
+denir. 
+
+ Bir Methodu Override Edebilmek İçin Koşullar:
+1. Parametre kısmı, üst sınıftaki methodun parametre kısmı ile tamamen aynı olmalıdır.
+2. Dönüş tipi, üst sınıftaki methodun dönüş tipiyle aynı veya alt türü olmalıdır.
+3. Erişim belirleyicisi, üst sınıftaki methodun erişim belirleyicisinden daha kısıtlayıcı olamaz. 
+Örneğin üst sınıftaki methodun erişim belirleyicisi 
+public ise alt sınıftaki methodun erişim belirleyicisi protected veya private olamaz.
+4. Final olarak belirtilen bir method override edilemez.
+5. Static method override edilemez ancak yeniden tanımlanabilir. (Method hidding olur.)
+6. Miras alınamayan bir method, override edilemez. (private method miras alınmadığından dolayı override edilemez.)
+
+
+Kalıtım'da Bellek Durumu:
+	Bir senaryo düşünelim ve bu senaryo şu şekilde olsun;
+	B classı, A classından türetildi ve C classı'da, B classından türetildi.
+	Biz C classından bir obje ürettiğimiz zaman önce A classının alanları belleğe yüklenir sonra da B classının alanları 
+	belleğe yüklenir sonra da C'nin alanları belleğe yüklenir.
+	Ancak; A ve B classlarının bir objesi oluşmaz sadece tek bir obje oluşur o da C classının objesidir. 
+	(Bu obje aynı zamanda B ve C classınında objesidir.)
+	Bu C classının objesinin içerisinde A classının ve B classının alanları mevcuttur. Yani;
+	C classının objesi bellekte oluşturulduğunda bu objenin içinde hem A classının değişkenleri hem B classının değişkenleri 
+	hem de C classının kendine özel olan değişkenleri için alan ayrılmış olur.
+  
+Üst Sınıf - SuperClass, ParentClass, BaseClass
+Alt Sınıf - SubClass, ChildClass, DerivedClass

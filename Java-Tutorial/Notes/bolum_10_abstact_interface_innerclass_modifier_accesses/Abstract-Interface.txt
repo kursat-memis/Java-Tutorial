@@ -1,0 +1,155 @@
+ Abstract (Soyut) Sınıf:
+Abstract classlar nesne üretilemeyen ve içinde abstract metotlar(içeriği doldurulmamış metotlar) bulundurabilen classlardır.
+ Not: Abstract classların içinde abstract metot olmalı diye bir zorunluluk yoktur. Ancak eğer her metotun içerisini doldurabiliyorsak bu classı
+abstract olarak tanımlamamızın da bir mantığı yoktur.
+
+Abstract metotların sadece tanımları vardır ve bu classtan türetilen classlar eğer abstract class değillerse bu metotların içeriğini doldurmak
+zorundadırlar. (Bu metotları implement etmek zorundadırlar.)
+
+Not: Abstract olarak yalnızca method tanımı yapabilirsin. Değişkenler veya başka alanlar abstract olamaz.
+
+ Abstract Classların Özellikleri:
+1- Abstract classlardan new ile nesne üretilemez.
+   Sebebi: İçeriği olmayan metotlar barındıran bu classlardan nesne üretilseydi biz bu metotlara nesne üzerinden erişebilirdik.
+	   Java içeriği olmayan metotu yürütemeyeceğinden dolayı bu classlardan nesne üretilmez.
+2- Abstract classlarda abstract olmayan metotlarda bulunabilir. 
+3- Abstract olan metot var ise bu metotları bu classtan türetilen alt sınıflar
+implement edip içeriğini doldurmak zorundadırlar. (Ya da alt sınıflarda abstract olmalıdır.)
+4- Bir sınıfta bir metot abstract ise o sınıf mutlaka abstract olmalıdır.
+5- Abstract metotlar static olamazlar. 
+   Sebebi: Eğer bu içeriği olmayan metotlar static olsaydı biz nesne üretmeden bu metotlara class adı üzerinden erişebilir olacaktık.
+           Java içeriği olmayan metotu yürütemeyeceğinden dolayı bu metotlar static olamazlar.
+6- Abstract classlardan nesne üretilmese bile bu metotların constructorları ve static-instance blokları vardır ve alt sınıflardan nesne üretilince
+   bunlar yine hiyerarşik olarak yürütülür.
+7- Abstract classlarda hiç metotta olmayabilir. Alt sınıfları bir üst sınıfta toplamak için bu yapı oluşturulabilir.
+8- Üst sınıf normal bir sınıf iken alt sınıf abstract yapıda olabilir. (Object normal bir sınıftır ve bunun alt sınıfları abst. olabilir.)
+9- Abstract metotlar private olamaz. (private metotlarda compiler time'da bind edilir. bunlar override edilemez.)
+	(private methodlar miras alınamaz ve miras alınamadıkları için override edilemez. Alt sınıflar, override edilemeyen methodların içeriğini dolduramaz.)
+10- Constructolar, static bloklar ve instance bloklar abstract olamaz. 
+Çünkü: constructor alt sınıfta override edilebilecek bir method değildir. Bu yüzden bu methodun içi alt sınıflarda yazılamaz.
+	  Static ve instance bloklarda üst sınıfın bir üyesi olmadığından miras alınamaz. E miras alınmayan bir şey override edilemez. E override edilemeyen
+	  bir şeyinde alt sınıfta içi doldurulamaz.
+	  Yani: Biz abstract methodların içini doldururken bunları override ederek dolduruyoruz. Override edilemeyen şeylerin içleri doldurulamaz.
+		   Constructorlar, instance-static bloklar, final methodlar, private methodlar override edilemeyeceklerinden dolayı abstract tanımlanamazlar.
+														  
+11- Bir sınıf hem abstract hem final olamaz. Çünkü;
+    Abstract sınıflarda abstract methodlar bulunabilir. Bunun amacı da bu methodların içeriğinin alt sınıflarca doldurulmasıdır. E bir sınıf final olursa
+    bu sınıfı extend edebilecek bir alt sınıf olmaz. Bu yüzden de sınıfın içindeki abstract methodların içi alt sınıflarca doldurulamaz. Bu yüzden;
+    bir sınıf hem final hem de abstract olamaz.
+12- Abstract methodlar static olamaz. Çünkü static olurlarsa bu sınıfın adını kullanarak bu methodları çalıştırabiliriz. Oysaki içeriği doldurulmayan
+	methodlar calistirilamaz. Ancak; abstract classlarda, abstract tanımlanamyan methodlar static olabilir.
+13- Bir method içinde abstract class tanımlanabilir.
+
+--------------------------------------------------------
+
+ Interface (Arayüz):
+
+- İnterface'ler birbirini extends yapar ve classlar interface'leri extends yapamaz onları implements yapar.
+- Javada çoklu kalıtım interface'lerin yardımıyla sağlanabilir.
+- Interfacelerin birbirini extends yapması ve classların birden fazla interface'i implement etmesi çoklu kalıtımdır.
+- Interface'ler tarafından yapılan çoklu kalıtım belirsizlik yaratmadığından dolayı sorun java için sorun teşkil etmiyor.
+- Interface, bir soyut method topluluğudur. Birden çok sınıf arasında bir contract olarak düşünülebilir. Interface'i implement eden classlar
+interface içindeki methodları implement etmek için bir anlaşma imzalamış gibi olur.
+- Interfaceler, birbiri ile alakası olmayan sınıfların bir contract'ı olabilir. Yani illa sınıf-interface arasında kalıtım ilişkisi olmasına
+gerek yok. (Abstract classlar - normal classlar arasında bir kalıtım ilişkisi kuruluyor ama interface'de sadece bir contract olayı olur.)
+- Interface'ler derlendikten sonra .class uzantılı dosyalar oluşur. (Interfaceler class değil ama class gibi davranan yapılar.)
+
+- Interface içinde tanımlanan her şey varsayılan olarak public'tir.
+
+- Interfaceler içinde sabitlerde tanımlanabilir. Bunlar varsayılan olarak public,static ve finaldır.
+- class A impelemnts B -> A classı B classını impelement eder.
+- Interfacelerleri implement eden abstract olmayan classlar interface içindeki gövdesiz metotları gerçekleştirmek zorundadır. Abstractlar ise
+bu zorunlulukta değildir.
+- Interfacelerde, abst. classlarda olduğu gibi bir çok sınıfı bir çatı altında toplamak amacıyla da kullanılabilir.
+- Interfacelerden de, abst. classlarda olduğu gibi nesne üretilmez ama alt sınıfların referanslarını bu tip değişkenler tutabilir.
+! Bir sınıf birden fazla interface'i implement edebilir.
+! Bir interface başka bir interfaceden kalıtılabilir. (InterfaceA extends InterfaceB)
+- Üyesi olmayan interface'e marker interface denir.
+- Bir interface içinde başka bir interface tanımlanabilir.
+
+Not: Java 8 ile beraber gelen bir özellik sayesinde gövdesi olan bir metot interface içinde tanımlanabilir: 
+Bunu yapmanın yolu; default veya static method kullanmaktır.
+	
+	   interface Kisi{
+           void yemekYe();
+           void sporYap();
+           default void adiniSoyle(){//metotun basına default yazmak zorundayız ve varsayılan olarak publictir.
+             System.out.println("Ben kişi interfacesiyim");
+           }
+        }
+
+ Abstract classlar vs Interface:
+1- Abstract classlarda tanımlanan değişkenler için herhangi bir kısıtlama yoktur, normal bir sınıfta olduğu gibi farklı erişim belirleyicilere
+sahip değişkenler tanımlanabilir. Ama interfacelerde sadece public-static-final olarak değişken tanımlanabilir.
+2- Abstract classlardan nesne üretememize rağmen constructorları vardır ve alt sınıftan bir nesne üretildiğinde const. lar üst classtan alt 
+classlara doğru sırayla tetiklenir. Interfacelerde ise constructor yoktur ve bunlardan da nesne üretilemez.
+3- Abstract classlardaki metotlar tanımlanırken herhangi bir kısıtlama yoktur ve metotlar normal classlarda olduğu gibi public-private vs. şeklinde
+tanımlanabilir ve bunlar gödevli veya gövdesiz olabilir. Interfacelerde tanımlanan metotlar ise public ve gövdesi olmayan metotlar olmalıdır.
+4- Bir sınıf tek bir abstract classtan türetilirken birden fazla interface'i implement edebilir.
+5- Bir interface birden fazla interface'i extends edebilir.
+6- Interfacelere tanımladığımız metotlar varsayılan olarak abstract ve publictir.
+7- Interface dosyaları derlendiğinde .class uzantılı dosyalar oluşur.
+8- Varsayılan olarak bir interface abstractır ama public değildir.
+9- Interfacelerde static ve instance bloklar kullanılamaz.
+10- Bir sınıf birden fazla interface'i implement edebilir.
+11- Java 8 ile beraber default ve static metot tanımları yapabiliriz. (gövdeli methodlar)
+12- Default metot override edilebilir ama static metot override edilemez.
+13- Bir interface baska interfacei extends yapar ama implement edemez.
+14- Interface içindeki static metot sadece interface adı ile çağrılabilir. Interface'i implement eden classların nesneleri tarafından
+çağrılamaz.
+15- Abstract class içinde tanımlanan abstract metotlar public, protected veya default olabilir ama Interfaceler içinde tanımlanan 
+gövdesiz metotlar varsayılan olarak publictir. 
+
+ Ne Zaman Abstract Classlar Ve Ne Zaman Interfaceler Kullanılmalı:
+1. Çoklu kalıtıma ihtiyacın varsa, interface kullanmalısın. Çünkü class yapılarında multiple-inheritance olayı yok.
+2. Eğer üst yapı ve alt yapı arasında bir is-a ilişkisi varsa abstract class kullan. Eğer is-a ilişkisi yoksa interface kullan.
+3. Nesneler arasında bir ilişki varsa abst. class kullan yoksa interface kullan.
+
+ Örnek:
+- Şimdi bir GeometrikSekil classımız var bir de Kare classımız var. GeometrikSekil, bazı methodların gövdelerini yazamayacağımız kadar soyut
+bir sınıf. Şimdi bu GeometrikSekil bir abstract class mı olmalı yoksa interface mi ? Cevap basit, Kare ve GeometrikSekil arasında bir is - a 
+ilişkisi olduğundan dolayı abstract class olmalı.
+
+- (Saçma bir örnek ama mantığı kavratabilir.)
+Şimdi bir Kalem classımız olsun bir de Klavye classımız. Bunların ikisinde de write() methodu olacak olsun. Şimdi bu methodu bir üst yapıda
+tanımlamak istiyoruz. Bu üst yapı, bir abstract class olursa; alt ve üst yapı arasında bir is-a ilişkisi olur. Ancak bizim senaryomuzda bir
+is-a ilişkisi yok. Sadece farklı türden objelerin yapabileceği ortak şeyler var ve biz bunları tek bir çatı altında toplamak istiyoruz.
+O yüzden oluşruacağımız üst yapı bir interface olmalı.
+
+Not: Burada üst yapıyı abst. class olarak tanımladığını düşünelim. Ve bu class içine de write() methodu yazdın. Tamam arkaplanda bir sıkıntı yok,
+sonuçta bundan türeyen kalem ve klavye classları bu methodu override etmek zorunda. Ama yüzeysel de bir mantık hatası var o da şu:
+- Üst sınıfla alt sınıf arasında bir is - a ilişkisi yok ki. Is - a ilişkisi yoksa abst. class kullanmak yerine, contract anlaşması olan bir inter-
+face kullanmak daha mantıklı.
+
+Kısacası; bu biraz senin yaptığın tasarıma bağlı. 
+is - a ilişkisi varsa -> abstract class
+contract ilişkisi varsa -> interface
+
+ Son not:
+Bir sınıf bir interfaceyi implemente ettiğinde oradaki metotların içini 
+doldurmak zorunda kalır ve bu metotlar da public olmalıdır. Çünkü metot 
+overriding olayında üst sınıftaki metotun alt sınıfta görünürlüğü 
+azaltılamaz. 
+Yani interfacedeki metotA() metotunu bir sınıf override ettiğinde;
+
+class A implements InterfaceA{
+  @Override
+  public void metotA(){
+  //hata yok
+  }
+
+  @Override
+  void metotA(){
+  //hata verir.public erişim belirleyici defaulta düşürüldüğü için
+  }
+}
+
+
+
+
+
+
+
+
+
+

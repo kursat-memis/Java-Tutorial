@@ -1,0 +1,68 @@
+ Pass By Value:
+Eğer metota value typlı değişken gönderirsek bu değişkenlerin değerleri metota gönderilir.
+int toplam = topla(sayi1, sayi2)//metota sayi1 ve sayi2nin sakladıkları değerler gönderilir.
+Yani metot içerisinde sayi1 ve sayi2nin değerlerini değiştirsek bile bunlar asıl olan sayi1 ve sayi2 değişkenlerine 
+yansımayacaktır.
+
+ Metot Overloading :
+Aynı isimli fonksiyonun birden fazla tanımlanmasıdır. Bunu yapabilmek için yeter şart: Fonksiyon imzalarının
+birbirinden farklı olması gerekir. Fonksiyon imzası: fonksiyon adı + parametre sayısı + parametrelerin tipleri.
+Not: Fonksiyonun geri dönüş tipi imza kapsamına girmez. 
+
+ Dizi kavramı:
+İçerisinde belirli sayıda ve aynı türde veriler barındıran yapılara dizi denir.Diziler primitive veya referans tip 
+veri türleri barındırabilir. Tek şart verilerin aynı türden olmasıdır.
+Dizi referans değerleri stack yapısında, dizi nesneleri ise heap alanında tutulur.
+
+Aşağıdaki dizi tanımlamalarının hepsi doğrudur.
+double[] a = new double[10] --> 10 tane double değer tutacak dizi
+int []b = new int[10] --> 10 tane integer değer tutacak dizi
+
+Ayrıca double[] veriler = {3,4, 5,1, 2,3} şeklinde de diziyi 
+oluşturabilirsiniz.
+
+Dizi bir kere tanımlanır, sonrasında dizideki elemanları değiştirebilirsiniz ancak tutacağı eleman sayısını 
+değiştiremezsiniz.
+
+ Veriler Nasıl Tutulur ?
+
+Yığın (Stack) :Bellekte yani Ram'de bulunur. Oldukça hızlı çalışan bir alandır. Java derleyicisi program 
+oluşturulmadan önce buraya konulacak verileri ve büyüklüklerini bilmelidir.İlkel veri tipleri o yüzden burada 
+tutulur. Çünkü hepsinin bellekte tutacağı alan sabit ve bellidir. Ama dizi veya nesnelerin ne kadar yer tutacağı 
+belli olmadığı için burada sadece referansları yer alır. Bu referansların değerleri ise heap alanında bulunan gerçek 
+değerin adres bilgisidir.
+Heap : Derleyici buradaki değerlerin ne kadar bellek ihtiyacı olduğunu bilmek zorunda değildir. 
+Biz ne zaman new deyip yeni bir dizi veya nesne oluşturmak istersek bu alanda bize yer verilir. 
+Diziler veya nesnelerin gerçek değerleri burada saklanır. Bu özgürlüklerin bize maaliyeti ise yığına göre 
+daha yavaş olmasıdır.
+
+ Foreach Döngüsü:
+Dizi elemanlarını okumak için kullanışlı bir yöntemdir. İndexle işimiz yok ve sadece okumak istiyorsak 
+bunu kullanabiliriz.
+
+for(int oankiSayi : dizi){ sout(oankiSayi) }
+
+ Pass by referance:
+Metotlara dizi gönderdiğimizde parametreye giden şey dizinin kopyası değil referansıdır. Bu yüzden metot içerisinde
+dizi üzerinde yaptığımız her şey orjinal diziyide etkiler. 
+
+ İki boyutlu diziler:
+
+veritipi[][] diziAdi = new veritipi[satir_sayisi][sutun_sayisi]
+	veya
+int[][] sayilar= { {0,100,200}, {350,0,250}, {150,500,0} } # 3 satır 3 sutunluk dizi.
+İki boyutlu bir dizide her bir satır aslında başka bir diziyi tutan 
+dizidir.
+
+ Varargs:
+Bir metota gonderilecek parametre sayısı bilinmediği durumlarda varargs kullanılır.
+
+public static void test(int... a){
+	// metot govdesi
+}
+
+Burada a, gelen parametre sayısı kadar veri tutabilen bir dizi. (metota gonderilen parametreler aynı tipten olmalıdır.)
+
+
+Arrays sınıfı içinde arrayler için kullanabileceğimiz güzel metotlar vardır. Bunlara internetten bakabilirsin.
+

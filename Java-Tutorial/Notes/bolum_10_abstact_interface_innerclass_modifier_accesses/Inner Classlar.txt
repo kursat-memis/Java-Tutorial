@@ -1,0 +1,93 @@
+  Member Inner Classes (Nested Inner Classes):
+- Java derleyicisi, iç sınıf durumunda iki sınıf dosyası oluşturur. 
+  İç sınıfın sınıf dosya adı "Outer$Inner"dır. 
+  İç sınıfı başlatmak istiyorsanız, dış sınıfın örneğini oluşturmanız gerekir. 
+  Böyle bir durumda, dış sınıfın örneği içinde bir iç sınıf örneği oluşturulur.
+Nasıl ki bir sınıfın içinde değişken ve metot tanımı yapabiliyorsak sınıf tanımıda yapabiliriz.
+Bu sınıflar static veya non-static olabilir.
+Bunlara erişmek için önce dış sınıftan nesne üretilir sonra iç sınıfa erişilir.
+
+ DisCerceveSinif.InnerNestedDahiliSinif nesne = new DisSinif().new InnerSinif();
+	ya da 
+ YaziciSinif yaziciSinif = new YaziciSinif();
+ YaziciSinif.StringDiziYazdir stringDiziYazdir = yaziciSinif.new StringDiziYazdir();
+
+Içerdeki sınıf, dış sınıfın private olarak tanımlanan alanları dahil bütün alanlarına (static veya değil) erişebilir. Aynı şey dıştaki
+sınıf içinde geçerlidir ama önce iç sınıftan bir nesne üretmelidir. Bunun sebebi:
+ Inner sınıftan bir nesne üretildiğinde, outherclasstaki alanlar zaten bellekte oluşturulmuş olur. O yüzden inner sınıftan, outher sınıftaki
+ alanlara erişebiliriz.
+ Ancak; outhersınıftan nesne ürettiğimiz zaman inner sınıftaki alanlar henüz bellekte oluşmuş olmazlar. Bu yüzden, outherclassta önce inner
+ classın alanlarının oluşması için bir obje oluştururuz sonra bu innerclasstaki alanlara erişiriz.
+ Not: Eğer, innerclassta static alanlar varsa, outher classtan, innerclassın nesnesi oluşturulmadan bu alanlara inner class adı üzerinden
+ erişebilirsin.
+      (çünkü bu alanlar, innerclassın objesi oluşmasa bile bellekte oluşmuştur.)
+
+İç sınıflar abstract veya final olabilir ancak her ikisi birden olamaz.
+
+ Local Inner Classes:
+Local inner class static olmayan inner classların bir diğer türüdür. Bir metot veya bir blogun (static - instance blok) içinde tanımlanan sınıflara denir.
+Local inner sınıflar statik olamaz. (Local memberlar static olamaz.)
+Bu sınıflar sadece tanımlandıkları yerde geçerlidir.Bu sınıflar tanımlandıkları metotun içinde bulunan değişkenleri kullanabilir.
+Bu sınıfları belirtirken erişim belirleyici kullanılmaz(localdaki memberlara sadece o localde erişebileceğimiz için local member'lara erişim belirleyici kullanılmaz.)
+Bu sınıfların içinde tüm erişim belirleyicilere sahip değişken ve metotlar olabilir.
+Bu sınıflar abstract veya final olabilir, ikisi aynı anda olamaz.
+
+ Anonymous Inner Classes:
+Bir classtaki bir alanın, sadece tek bir nesne veya belirli nesneler için farklı çalışması isteniyorsa bunu kullanabiliriz.
+Bu sınıflar isimsiz iç sınıf olarak adlandırılırlar.
+
+GeometrikSekil nesne=new GeometrikSekil (){
+	@Override
+	void alanHesapla(){
+		System.out.println("Isımsız sınıfta bu metot tekrar yazıldı");
+	}
+
+}
+
+ Burada arkaplanda çalışan şey şuna benzer:
+- Bir tane class oluşturuluyor.
+- Bu class GeometrikClass'i extends ediyor.
+- Ve sen bu classin içini yukarıdaki blokların arasında dolduruyorsun.
+- Bu classtan bir obje oluşturuluyor ve referansı return ediliyor. 
+(İşte bu classın bir ismi olmadığı için bunlara anonymous inner classlar denir.)
+
+Bu değişiklik sadece bu nesne için geçerlidir. Buradaki gibi değişiklikle metotu 
+kullanmak istiyorsak yukarıdaki gibi tekrardan isimsiz bir iç sınıf 
+olusturmamız gerekir. Yani alanHesapla da içeriğin yeniden yazılması sonradan 
+oluşturulacak diğer nesnelere aktarılmayacaktır.
+
+GeometrikSekil nesne = new IsimsizInnerClass() gibi bir durum oldu. (Polymorpizm kullanıldı.)
+
+İsimsiz iç sınıfları nesne üretilmeyen interface ve soyut sınıflarda da 
+oldukça fazla kullanırız. Mantık aynıdır, interface için düşünürsek.
+
+Interface a =new Interface(){
+	@Override
+	public void interfaceMetotu(){
+		System.out.println("Metot");
+	}
+}
+
+Sanki bir sınıf bu interfaceyi implemente etmiş ve biz ondan bir nesne 
+oluşturmuşuz gibi düşünebilirsiniz.
+
+ Static Member (Nested)Inner Classes:
+- Outher classlar static olamaz ancak inner classlar olabilir.
+Inner sınıfı statik olarak belirleyebiliriz. Bu sınıflarda hem statik hem statik olmayan metot ve değişkenler bulunabilir.
+Statik inner sınıftan dışardaki sınıfın statik alanlarına erişilebilir, ama statik olmayan alanlara erişemeyiz.
+Bir static inner sınıf abstract olabilir, ama statik metotlar abstract olamaz.
+Statik inner sınıflar final olabilir.
+- Inner classlar, hem static hem abstract olabilirler. Outher classlarda olduğu gibi bunlardan nesne üretilemez.
+
+
+Neden İç İçe Sınıflar Kullanılır?
+İç içe sınıfları kullanmanın zorlayıcı nedenleri arasında şunlar yer alır:
+
+Yalnızca tek bir yerde kullanılan sınıfları mantıksal olarak gruplandırmanın bir yoludur: Bir sınıf yalnızca bir başka sınıf için faydalıysa, o sınıfa gömmek ve ikisini bir arada tutmak 
+mantıklıdır. Bu tür "yardımcı sınıfları" iç içe yerleştirmek, paketlerini daha akıcı hale getirir.
+
+Kapsüllemeyi artırır : B'nin, aksi halde bildirilecek olan A üyelerine erişmesine ihtiyaç duyduğu A ve B olmak üzere iki üst düzey sınıf düşünün private. 
+B sınıfını A sınıfı içinde saklayarak, A'nın üyeleri özel ilan edilebilir ve B onlara erişebilir. Ayrıca B'nin kendisi dış dünyadan gizlenebilir.
+
+Daha okunabilir ve bakımı yapılabilir kodlara yol açabilir : Küçük sınıfları üst düzey sınıflara yerleştirmek, kodu kullanıldığı yere daha yakın hale getirir.
+

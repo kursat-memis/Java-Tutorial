@@ -1,0 +1,113 @@
+Class -> Sınıf
+Object -> Nesne
+
+TANIM-1: Class, bizim kendi veri türümüz. Nesne, veri türüne atadığım değer.
+		( int x = 10; // int -> class, 10 -> nesne )
+
+TANIM-2: Class, veri yapısının taslağıdır. (Bina projesi gibi), soyuttur.
+	 Nesne, classları kullanarak ortaya çıkardığımız somut yapıdır.	
+
+Not: Sınıflar referans tipli veri türleridir. Nesneler heapte tutulur.
+     new keywordu ile heapten belirli bir alan bizim için ayrılır. Bu alanın boyutunuda
+     constructor belirler.
+
+Not: Consturctor sadece nesne oluşturulduğunda çalıştırılır. Main metotunda nesne üzerinden const. cağrılamaz.
+Class içindeki metotlar const. cağıramaz. (Constructorlar birbirini this() keywordu ile çağırabilir ama diğer metotlar const.ları çağıramaz.)
+ Önemli Not: Constructor bir sınıfın member'i sayılmaz.
+
+Constructor:
+- Nesne oluşturulduğunda otomatik olarak çağrılır.
+- Heap alanında ne kadar yer ayrılacağı bu metot sayesinde öğrenilir.
+- Geriye bir değer döndermez ve void ile belirtilmez. 
+- Constructor için acces modifier (public, protected, default, private) belirleyebilirsin. Ancak private tanımlanan constructor'dan nesne üretilemez.
+- Sınıf adı ile bire bir aynı olmalıdır.
+- Bu metot sınıf içindeki değişkenlere ilk değerler atanırkende kullanılır.
+
+Not: Java da her sınıf için varsayılan olarak ve herhangi bir parametre almayan bir 
+constructor bulunur ve buna default constructor denir. Bunu biz yazmasak bile 
+sistem otomatik olarak bunu oluşturur ve new ile nesne ürettiğimiz anda bunu 
+çağırır.
+
+!!! Consturctor sayesinde heapten ne kadar yer ayrılması gerektiği belirlenir. Buradaki ayrıntı; java, nesnenin boyutu kadar heapten yer
+ayırmıyor. Nesne boyutundan biraz daha fazla yer ayırıyor. (Headerlar falan içinde bellek ayırıyormuş.)
+
+!!! Constructor bellekte belirli bir alan ayırmaya ve bu ayrılmış alandaki değişkenlere ilk
+    değerlerini atamaya yarar.
+!!! Bir sınıfın birden fazla kurucu metotu olabilir. Sistem hangisini kullanacağına 
+    kurucu metotların parametre sayısına ve türüne bakarak karar verir.(Metot overloading)
+
+Not: Bir kurucu metottan baska bir kurucu metotu this ile çağırabilirsiniz. Böyle 
+bir kullanım varsa this ifadesi ilk satırda yazılmalı. Ve bir kurucu metotta 
+birden fazla this ile başka yapılandırıcılar çağrılamaz.
+
+Not: this() --> o anki nesnenin kurucu metotlarına erişir.
+     this.degisken --> o anki nesnenin değişkenlerine erişir.
+     !!! this = o anki nesnenin referansını tutar.	
+
+
+Encapsulation (Kapsülleme):
+  Sınıf içindeki değişkenleri dışarıdan direkt olarak erişime kapatıp, bu 
+ değerlere metotlar üzerinden erişme kavramına denir.
+
+Kapsülleme işlemini, değişkenleri private tanımlayarak yaparız.
+Private tanımlanan değişkenlere class dışından doğrudan erişim yapılamaz, ancak class içerisinden yapılabilir.
+Private tanımlanan değişkenleri, getter metotları ile okur ve setter metotları ile değerlerini atarız.
+
+Encapsulation, değişkenlerin okunması ve yazılması üzerinde kontrol gücümüzü arttırır ve yanlış şeyler olmasını engeller.
+
+
+Static Anahtar Kelimesi:
+  Static olarak tanımlanan bir değişken, tüm sınıf nesneleri için ortaktır.
+  Static olarak tanımlanan değişkenler, sınıf değişkeni; diğer değişkenler nesne değişkeni olarak adlandırılır.
+  Static olarak tanımlanan değişkene her nesne tarafından ulaşılabilir, bir nesne üzerinden bu değişken değiştirildiğinde
+  diğer nesnelercede bu değişken değeri değiştirilmiş olur.
+  Static değişkenler sınıf değişkeni olduğu için bu değişkenlere erişmek için nesne üretmeye gerek yoktur. Class adı üzerinden de
+  erişilebilir.
+  Static olarak metot tanımı da yapılabilir. Yine bunlar da tüm nesneler ile erişilebilir ve bunlara erişmek için sınıf adı da kullanılabilir.
+  Static olan (class method) metottan, static olan değişken ve metotlara erişebiliriz ama static olmayan yani nesneye özgü olan
+  değişken ve metotlara erişemeyiz.
+  Static yapılar bellekte bir defa oluşturulur, non static yapılar her nesne için ayrı ayrı oluşturulur.
+  
+  !!! Static metot ve değişkenlere nesne üzerinden de erişilebilir. Fakat bu çok kötü bir yoldur. Bu metot ve değişkenlere class adı üzerinden eriş.
+
+  !!! Static olarak tanımlanan değişken ve metotların varlığı nesneye bağlı değildir. Ancak static olarak tanımlanmayan değişkenlerin veya
+      metotların varolabilmesi için nesnelerin var olması gerekir. Static bir metotta nesneye özgü bir özelliği kullanmam bu yüzden mantıksızdır
+      ve javada buna izin vermez.
+      (Örneğin static metot içerisinde nesnenin özelliklerini ekrana bastırmak istesem ve nesne oluşturmadan class adı ile bu metotu çalış
+      tırsam programda mantık hatası olur.)
+
+  !!! Static olan bir yapıdan, static olmayan bir alana erişmek için muhakkak nesne oluşturmalı ve o nesne üzerinden o alana erişmeliyiz.
+ 
+  !!! Sınıf değişkenleri, içerisinde tanımlanmış olduğu sınıftan hiçbir nesne üretilmese bile bellekte yer kaplar, nesne değişkenleri ise
+      nesne oluşturulmadığı sürece bellekte yer kaplamaz. (Muhtemelen böyle?)
+
+  Main metodu neden statictir ?
+    Main metotu static olmazsa bu metot bellekte direkt olarak oluşturulmaz. Metotun bellekte oluşması için nesne oluşturulması gerekirdi.
+    Bu yüzden her java projesinde en az 1 tane static olarak tanımlı main metotu bulunmalıdır.
+     
+  Main classında tanımladığımız metotları neden static tanımlarız?
+    Çünkü bu metotları main metotunda çağıracağımız zaman nesne oluşturupta nesne üzerinden çağırmak yerine direkt metot isimlerini
+    yazarak çağırabilelim diye.
+
+Immutable(Değişmez) Olayı:
+Bir classtan, bir nesne oluşturduktan sonra o nesnenin ilk değerlerini atayıp ve bir daha bu değerlerin değişmesini istemiyorsak
+bu classı immutable class yaparak nesnelerini de immutable nesne yapmış oluruz.
+
+Bir sınıfı immutable(değiştirilemez) yapmak için;
+ Tüm değişkenlerin private olması gerekir.
+ Setter metotlar olmamalı. (Olsa bile private olmalı. Ama bu mantıksız olur, o yüzden hiç yazmamak daha iyi.)
+ Getter metotlar da herhangi bir referans döndürmemeli.(dizi olarak tutulan bir değişken aslında dizinin kendisidir.)
+
+Metotlara Nesne Gönderme
+ Nesneler referans tipli veri türü oldukları için metotlara gönderirken 
+ değerleri değil bellekte tuttukları adresler gönderilir.
+ Bundan dolayı metota gönderilen nesne üzerinde yapılan değişiklikler asıl 
+ nesnenin içeriğini de değiştirir.
+
+Son Not: public static void main(String args[])
+Java’da main metodunun imzası sabittir. Main metodu public ve static olmak zorundadır. Bu metodun public olması gerektmektedir 
+çünkü kodumuzu çalıştıran JVM’nin dışarıdan main metodunu çalıştırabilmesi gerekir. Bu metodun ayrıca static de olması gerekir 
+çünkü JVM kodumuzu çalıştırırken main metodunun yazılı olduğu sınıftan bir nesne oluşturmaz. 
+Ortada nesne yokken bir metodu çalıştırmak için de o metodun static olarak tanımlanmış olması gerekir.
+
+ 

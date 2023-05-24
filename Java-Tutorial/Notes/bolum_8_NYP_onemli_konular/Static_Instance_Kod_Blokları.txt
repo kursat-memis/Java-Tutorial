@@ -1,0 +1,64 @@
+Static Kod Blok: Static attribute'lerin başlangıç değerini atamak için kullanılabilir.
+
+- Javada static bloklar, class yüklenirken yürütülür.
+- Javada static bloklar, instance bloklardan önce yürütülür.
+- Java'da statik blok içinde yalnızca statik yapılara erişilebilir. (Aslında static alanlar içinde static olmayan alanlara erişemeyiz demek daha doğru.)
+
+Instance Kod Blok: Instance attribute'lerin başlangıç değerini atamak için kullanılabilir.
+
+- Javada instance bloklar, yazıldığı classtan veya o classın subclasslarından nesne oluşturulduğunda yürütülür.
+- Javada instance bloklar, static bloklardan sonra yürütülür.
+- Java'da statik ve statik olmayan değişkenlere (instance değişkenleri) instance bloğu içinde erişilebilir.
+
+Not: Static ve Instance Bloklar cons.'dan önce yürütülür.
+
+class Blok1 {
+    static {
+        System.out.println("Static Blok1");
+    }
+
+    {
+        System.out.println("Instance Blok1");
+    }
+
+    public Blok1() {
+        System.out.println("Const 1");
+    }
+
+}
+
+class Blok2 extends Blok1{
+    static {
+        System.out.println("Static Blok2");
+    }
+
+    {
+        System.out.println("Instance Blok2");
+    }
+
+    public Blok2() {
+        System.out.println("Const 2");
+    }
+}
+
+public class JavaDersleri {
+    public static void main(String[] args) {
+
+        Blok2 b2 = new Blok2();
+
+    }
+}
+
+	Yukarıdaki Kodun Ekran Çıktısı: 
+Static Blok1
+Static Blok2
+Instance Blok1
+Const 1
+Instance Blok2
+Const 2
+
+
+Not: Static bloklar, bulundukları classtan ilk kez nesne üretildiğinde yürütülür.(class yüklendiği zaman yürütülür) Ancak bu classtan
+2. nesne ve sonraki nesneleri üretirken yürütülmez. Yani static bloklar sadece ilk nesne üretilirken yürütülür ve bir daha da yürütülmez.
+Sebebi: Static bloklar class yüklenirken yürütülür ve class belleğe 1 kere yüklenir. Class yüklendikten sonra tekrar tekrar nesne oluşturulması
+classın tekrar belleğe yüklenmesine sebeb olmaz.

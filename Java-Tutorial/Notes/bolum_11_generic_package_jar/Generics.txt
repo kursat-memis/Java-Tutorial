@@ -1,0 +1,7 @@
+1. static field'lar içinde generic typle'lar kullanılamaz. cunku bunlar objeye baglidir.
+2. generic typle'lara primitive type'lar gönderilmez. (type extends Object.)
+3. type bilgisi girilmezse, type = object olur.
+
+
+ -- Generic Tekrar ---
+ -- Generic vs Object --

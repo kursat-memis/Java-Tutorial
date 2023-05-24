@@ -1,0 +1,41 @@
+ Comparable Interface:
+- Bir ArrayList'i sıralamak için Collections.sort() methodunu, bir Array'i sıralamak için de Arrays.sort() methodunu kullanabiliriz.
+
+- Collections.sort() ve Arrays.sort() methodunun çalışması için parametre olarak gönderilen Array ve ArrayList'in tuttuğu elemanların üretildiği classın Comparable interface'ini 
+implement etmesi gerekir.
+
+- String ve Wrapper tipten objeleri tutan Array/ArrayList ' i bu methoda gönderdiğimiz zaman sorun çıkmayacaktır. Çünkü; String ve Wrapper classlar Comparable interface'ini 
+implement etmiştir.
+
+- Primitive tipten veriler tutan Array'i bu methoda göndersekte bir sorun çıkmayacaktır çünkü bu method Arrays classının içinde overload edilerek primitive tipten verileride
+kıyaslayabilecek methodlara sahiptir. (ArrayList zaten primitive tipten eleman tutamaz.)
+
+- Object tipinden eleman tutan Array ' i de bu methoda göndersek; Object classı, Comparable interface'ini impelement etmemesine rağmen yine problem çıkmayacaktır. Çünkü
+Arrays classı içinde Object tipi içinde bir method overload yapılmıştır. Ancak Object tipinden eleman tutan ArrayList'i bu methoda gönderemeyiz çünkü Collections classı içinde
+bütün sort methodları parametre olarak Comparable interface'ini impelement eden tipten Objeler beklemektedir.
+
+- Peki biz kendi oluşturduğumuz türden veriler tutan bir Array/ArrayList oluştursak ve bu yapıyı sıralamak istesek ne yaparız ?
+
+Cevap: Comparable Interface'i kendi classımızda impelement ederek.
+
+ Comparable Interface:
+- Comparable interface'i, tek bir methoda sahiptir ve o method: int compareTo(T o)
+- Şimdi bizim bu methoda göre sıralama yapabilmemiz için öncelikle kendi veri türümüzün (oluşturduğumuz class'ın) Comparable interface'ini
+implements etmesi gerekmektedir. Bunun sonucunda da interface içindeki tek method olan compareTo() methodunu override ederek içini doldurmalıdır.
+- compareTo() methodu bize, 3 tür integer return edebilir.
+ 1. 0'dan büyük bir int return eder. (methodu cagiran obje > argüman olarak gelen obje)
+ 2. 0'a eşit bir int return eder. (methodu cagiran obje = argüman olarak gelen obje)
+ 3. 0'dan küçük bir int return eder. (methodu cagiran obje < argüman olarak gelen obje)
+- compareTo methodunu yukarıdaki gibi override ettiğimizde, diziyi, karşılaştırmak istediğimiz değere göre küçükten büyüğe doğru sıralar.
+- Eğer büyükten küçüğe doğru sıralama yapmak istiyorsak yukarıdaki sistemin ters mantığıyla kodları yazmalıyız.
+
+ String İçin compareTo() methodu:
+1. İki String eşitse -> 0 return eder.
+2. Methodu cagiran obje, argüman gönderilen objeden alfabetik olarak daha öncelikliyse -> <0 return eder.
+3. Methodu cagiran obje, argüman gönderilen objeden alfabetik olarak daha öncelikli değilse -> >0 return eder.
+
+
+ Comparable vs Comparator: 
+- https://hasscript.com/330/comparator-ve-comparable-neden-var-farklar%C4%B1-nedir
+- https://www.geeksforgeeks.org/comparable-vs-comparator-in-java/
+- https://www.javatpoint.com/difference-between-comparable-and-comparator

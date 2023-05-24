@@ -1,0 +1,11 @@
+c = (a>b) ? a+b : a-b; -> eğer a > b ise c'ye a+b atanır, değilse c'ye a-b atanır.
+
+ swtich-case:
+İlgili değişkenin değerine göre farklı işlemler yapılacaksa kullanılması
+gereken yapıdır.
+Sadece char, short, byte veya int değerler kullanılabilir.
+
+break -> döngüyü kırarak döngüden çıkar.
+continue -> altında kalan kodları okumayarak bir sonraki tura geçer.
+return -> hem geriye değer dönderir hem de içinde bulunduğu metotu sonlandırır.
+

@@ -1,0 +1,32 @@
+ Packages:
+- Her zaman küçük harfle başlarlar.
+- Tekil (unique) olmalıdır.
+- '-' yerine '_' kullanılır.
+- Javanın anahtar kelimelerinden birini içeriyorsa başına _ konulur.
+
+ Class - Interface:
+- Büyük harfle başlar ve ikinci kelimede büyük harfle başlar.
+- Interface adlandırılırken içerdiği metotları belli eden bir isim almalıdır.
+
+ Method:
+- Küçük harfle başla, ikinci kelimeyi büyük harfle başlat.
+- Genellikle fiil ifadeleri içermeli.
+- Yapacağı işi belli eden ifade olmalı.
+
+
+ Constants - Sabitler:
+- Tamamı büyük harfle yazılmalı.
+- Sabit tanımlanırken kelimeler _ ile ayrılmalı.
+- Final anahtar kelimesi ile tanımlanmalı.
+
+ Variables:
+- Küçük harfle başla, ikinci kelimeyi büyük harfle başlat.
+- i -> döngülerde, temp -> foreach döngülerinde.
+- _ kullanılmamalı.
+
+ Generic Parameters:
+- E -> element, Java collection frameworklerde çok kullanılır.
+- K -> key
+- N -> Number
+- T -> Type
+- V -> Value

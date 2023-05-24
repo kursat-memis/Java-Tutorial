@@ -1,0 +1,30 @@
+ Polymorpizm (Çok Biçimlilik): Üst sınıf tipindeki bir değişkene alt sınıf referansının atanabilmesi durumudur.
+
+class Kopek extends Hayvan{} -> Kopek sınıfının her nesnesi aslında Hayvan sınıfınında nesnesidir. Tam tersi doğru değildir.
+Her diktortgen bir geometrik sekildir ama her geometrik sekil bir dikdortgen değildir. Bundan dolayı üst sınıf tipine alt sınıf referansı bağlanabilir.
+
+Hayvan h=new Kopek(); / Kopek nesnesi aynı zamanda bir Hayvan nesnesidir. Bu yüzden bu atama doğrudur.
+Kopek k=new Hayvan();// Hayvan nesnesi aynı zamanda bir Kopek nesnesi değildir. Bu yüzden bu atama yanlıştır.
+int x = 10; (nasıl ki burada 10 bir int midir diye düşünüyorsak yukardaki orneklerde de sagdaki bir soldaki midir diye düşünmeliyiz.)
+
+ ! Kısaca üst class, alt classın referansını tutabilir. Bu da bize az kod çok iş programı yazmamıza olanak sağlar.
+
+ 
+ Casting Ve 'instanceof' Anahtar Kelimesi:
+
+GeometrikSekil gs = new Kare();
+Kare k = gs; 
+// Her ne kadarda gs degiskeni Kare tipindeki bir referans tutsa da editör gs'nin kare tuttuğunu bilmez. Bunu run time'da değer atadıktan sonra öğrenir.
+// Bundan dolayı biz bu kodu yazdığımızda editör hata verir. 
+(gs nin GeometrikSekil tipinde bir referans tuttuğunu sanıyor, Kare tipinde referans tuttuğunu bilmiyor.)
+
+
+Kare k = (Kare) gs; // Bu kodu böyle yazarsak problem çözüşmüş olur.
+
+ instanceof -> 'nesne_ref_adi instanceof class_adi' şeklinde bir kullanıma sahiptir ve nesnenin classın bir örneği olup olmadığını kontrol eder.
+	System.out.println(kare instanceof GeometrikSekil); -> true
+	System.out.println(geometriksekil instanceof Kare); -> false
+
+
+
+

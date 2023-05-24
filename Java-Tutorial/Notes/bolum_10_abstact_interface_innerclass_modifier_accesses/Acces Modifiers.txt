@@ -1,0 +1,83 @@
+ Acces-Modifiers (Erişim Belirleyiciler):
+
+
+ Hangi Erişim Belirleyicileri Class Tanımlamalarında Kullanılabilir?
+Inner classlar cerceve classın attributu oldugu için inner class tanımlamalarında bütün erişim belirleyicilerini kullanabiliriz.
+Cerceve class tanımlamalarında ise sadece public ve default erişim belirleyicisi kullanabiliriz. (pp'yi kullanamazsın.)
+Not: Inner interface'lerde member oldukları için bütün erişim belirleyicilerini kullanabiliriz.
+
+private: Bu belirleyici ile tanımlanan sınıf üyelerine ve inner (dahili)sınıflara başka hiçbir sınıftan erişemezsin.
+ Private tanımlanan metotlar sadece bu sınıfa aittir. (Override edilemez.)
+ Sınıfın kurucusu private tanımlanırsa o sınıftan nesne üretemeyiz ve alt sınıflar bu sınıfı kalıtamaz.
+
+friendly-default: Herhangi bir erişim belirleyici kullanılmazsa java o sınıf ve metotlara aynı paket içinden erişilebilecek bir sınır koyar.
+ Default tanımlanan yapılara paket dışından erişilemez.
+ Constructor default ise baska paketlerden bu sınıf nesnesi üretilemez ve baska paketlerdeki classlar bu classı extends edemez.
+
+protected: Bu belirleyici ile belirlenmiş sınıf üyelerine ve inner (dahili) sınıflara aynı paket içinden diğer sınıflar erişebilir. Farklı paketler
+söz konusu ise bu sınıftan türetilmiş alt sınıflar protected tanımlanan yapılara erişebilir.
+Constructor protected olabilir ama baska paketlerden nesne üretemezsin.
+(Constructor'i miras olarak alamazsın. o yüzden baska paketlerde kalıtım yapsan bile nesne üretilmez.)
+
+	Not: Farklı paketteki B classı, A classındaki protected tanımlı x'e miras aldığı için erişebilir. 
+     Yani A classından nesne üretip bu nesne üzerinden x' erişemez. Ama B den nesne üretip erişebilir.Çünkü B den üretilen nesne
+	     x' i miras alarak kullanıyor.
+	     Yani:
+	     1- B claası, A classını extends yapacak.
+	     2- B classı A classından nesne üreterek erişemez, miras aldığı x i kullanabilir.
+	     3- B classından nesne üreterek x e erişebiliriz çünkü bu nesne üzerinden eriştiğimiz x, miras alınan x'tir.
+	     4- Eğer x, A classında static olarak tanımlanmışsa, A classından nesne üreterekte, A classının adını kullanarakta, B classından nesne üreterekte 
+             x'e erişebiliriz. Çünkü x static değişken olduğundan
+                bu 3 yöntemde de biz x'i miras alınan x olarak kullanıyoruz.
+	     5- A classında protected tanımlı inner F classı varsa B classı içinden F classının nesnesi oluşturulabilir. 
+			(inner classlar, cerceve classın member'i (üyesi) oldugu için onları da kalıtımla almis olduk. Ve kalıtımla aldığımız farklı
+			paketteki protected alanlara erisebiliriz.)
+
+Protected için özel durum: Üst sınıfta protected tanımlı bir constructor'i new diyerek yeni nesne üretirken cagiramayız. Ancak java, alt sınıfta
+super keywordu kullanarak, üst sınıfın constructor'ını cagirmamıza izin veriyor.
+
+public: Bu belirleyici ile belirlenen sınıf, metot ve sınıfa ait değişkenlere her yerden erişilebilir.
+
+
+		   default      private  protected  	public
+
+Aynı sınıf 	EVET 	   EVET 	  EVET 	  	EVET
+
+Aynı pakette	EVET 	  HAYIR 	  EVET 	     EVET
+alt sınıf  
+
+Aynı pakette	EVET 	  HAYIR 	  EVET 	     EVET
+alt sınıf olmayan
+
+Farklı pakette	HAYIR 	  HAYIR 	   EVET 	     EVET
+alt sınıf
+
+Farklı paket	HAYIR 	  HAYIR 	  HAYIR 	     EVET
+alt sınıf olmayan
+
+
+ Non Acces Modifiers: 
+
+static : Bir sınıfa ait tüm nesnelerin erişebileceği, sınıfa özgü olan metot ve değişkenleri belirler. Bunlar bellekte sınıfa özgü olan farklı bir 
+alanda saklanırlar. Statik değişkenler, statik metotlar ve static kod bloğu...
+
+final : Bir değişken, metot veya sınıf için kullanılır. Final belirtilen bir değişkene ilk değer atandıktan sonra güncelleme yapılamaz. 
+Final belirtilen bir metot alt sınıflarca override edilemez. Final belirtilen bir sınıf kalıtılamaz.
+
+abstract : Sınıf veya metot için kullanılır. Kurucu metot veya değişkenlere abstract tanımı yapılamaz. Bir metot abstract olarak tanımlanırsa 
+alt sınıflar bunu gerçekleştirmek zorundadır. Bir sınıfta bir tane metot abstract ise o sınıf abstract olmalıdır ve abstract sınıflardan 
+new ile nesne oluşturulamaz.
+
+synchronized ve volatile thread konusunda işlenecektir.
+transient nesnelerin serileştirilmesi konusunda işlenecektir.
+
+strictfp : Noktalı ifadelerin yani float değerlerin hesaplanmasında tüm 
+platformlarda aynı sonucun çıkması için daha tutarlı sonuçlar almak için 
+kullanılır. Sınıflara metotlara ve interfacelere uygulanabilir. (Detay için internetten bakaiblirsin ama çok kullanılmaz)
+
+
+
+
+
+
+

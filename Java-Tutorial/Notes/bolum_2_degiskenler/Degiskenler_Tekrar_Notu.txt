@@ -1,0 +1,76 @@
+ Primitive(İlkel) Veri Tipleri: (Value Type)
+Bellekte sabit yer tutarlar.
+
+(1 byte = 8 bit)
+1.)byte - 1 byte  (-2^7, 2^7 - 1)
+2.)short - 2 byte  (-2^15, 2^15 - 1) 
+3.)int - 4 byte (-2^31, 2^31 - 1)
+4.)long - 8 byte (-2^63, 2^63 - 1)
+5.)float 4 byte (-2^31, 2^31 - 1)
+6.)double 8 byte (-2^63, 2^63 - 1)
+7.)char 2 byte
+8.)boolean 1 bit (true or false)
+
+Not: Javada ondalıklı sayı tanımlamaları otomatik olarak double veri tipiyle yapılır.
+
+float sayi = 10.2; -> bu kod hata verir. cünkü java 10.2 degerini double olarak düşünür ve float olan bir değişkene atayamaz.
+
+float olarak bir değer atamak istiyorsan
+
+float sayi = 10.2f; veya float sayi = 10.2F; olarak statementi düzenlemelisin.
+
+
+Yukarıdaki veri türleri javada NESNE olarak algılanmaz. Bu nedenle bunlara primitive veri tipleri diyoruz.
+
+Primitive veri türlerinin her birinin bir wrapper(sarıcı) bir classı vardır ve bu classlar veri türünün büyük harfle başlayan versiyonudur.(int - Integer, double - Double vb.)
+İşte bu wrapper classlardan uretilen değişkenleri java nesne olarak algılar. Ve nesnelere null değerler atanabilir.
+
+System.out.println("En büyük integerdeğer :" + Integer.MAX_VALUE);
+System.out.println("En büyük float değer :" + Float.MAX_VALUE);
+
+ Type Casting:
+Küçük olan veri tipi otomatik olarak büyük olan veri tipine dönüştürülür. Yani;
+int sayi1 = 10;
+long sayi2 = sayi1; // sayi1' in tipi otomatik olarak sayi2'nin tipine dönüştü. Ama tam tersi otomatik olarak java tarafından yapılmaz. Çünkü;
+
+int olarak tanımlanan sayi1 değişkeni için bellekte 4 byte'lık bir alan ayrıldı ve biz o alana 8 byte'lık veri atamak istediğimiz için veri kaybı olabilir.
+Bu durumda biz kendimiz casting yapmamız gerekir.
+
+int sayi1 = (int)sayi2;
+
+Ayrıca tam sayı tutan byte, short, int ve long veri tipine sahip 
+değişkenlere noktalı ifadeler içeren float veya double değerler atanamaz. 
+Böyle durumlarda virgülden sonraki kısmın kaybedileceği gerçeğini 
+kabul ederek tip dönüşümü yapılabilir.
+int sayi = (int) 7,75; // sayi değişkenine atanan değer 7 olur. 
+
+
+   Operatorler:
+
+ ++ operatoru:
+sayi1 = ++sayi2 + 1; // sayi2 degiskenini bir artır ve 1 ile topla sayi1 degiskenine ata.
+sayi1 = sayi2++ + 1; // sayi2 degiskeni ve 1'i topla, sonucu sayi1 e ata, sayi2 degiskenini 1 artır.
+
+ İşlem Önceliği:
+
+İşlem önceliği sırası büyükten küçüğe doğru şu şekildedir:
+1. () önce parantez içi hesaplanır.
+2. ++ ve -- (eğer değişkenden önce ise)
+3. çarpma ve bölme
+4. toplama ve çıkarma
+5. = atama işlemi
+6. ++ ve -- (eğer değişkenden sonra ise)
+
+
+-------------------------------------------
+
+0 öneki sayının sekizli olduğunu belirtmek için kullanılır ve 0x öneki, sayının onaltılık olduğunu gösterir. Örneğin -
+
+int decimal = 100;
+int octal = 0144;
+int hexa =  0x64;
+
+Dize ve karakter türleri, herhangi bir Unicode karakteri içerebilir. Örneğin -
+
+char a = '\u0001';
+String a = "\u0001";

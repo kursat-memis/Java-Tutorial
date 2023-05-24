@@ -1,0 +1,93 @@
+ Equals Metodu: Nesnelerin birbiriyle eşit olup-olmama durumunu kontrol eder.
+Object classının bir metotudur, bütün classlar bunu miras yolu ile almıştır. Varsayılan haliyle iki nesnenin aynı alanı gösterip göstermediğine bakar.
+İki nesne aynı alanı gösterirse true, diğer halde false değeri return eder. Biz bu metotu override ederek istediğimiz açıdan kontrol sağlayabiliriz.
+
+ HashCode Metodu: İki nesnenin adresleri birbirine eşit ise hashcode'larıda aynıdır.
+Object classının bir metotudur, bütün classlar bunu miras yolu ile almıştır.
+
+Not: Wrapper classlar ve String classı equals metotunu override etmiştir. Equals metotu bu classlardan üretilen nesneler için varsayılan olarak çalışmaz. Nesnelerin içeriklerine
+bakar ve içerikler eşitse true, diğer hal durumunda false değeri return eder.
+
+Finalize Metotu: Bir nesne silinmeden önce tetiklenen metottur. 
+(Finalize metotu java 9 dan sonra ne zaman çalışacağı belli olmadığından dolayı yazılımcıların buna güvenmemesi için kullanımdan kaldırılmıştır.)
+
+Garbage Collector (Çöp Toplayıcı): Bir nesnenin artık kullanılmadığına ve silinmesi gerektiğine karar veren mekanızmadır.
+Not: Çok fazla çöp nesne birikmemişse garbage collector devreye girmeyebilir. system.gc() komutu ile garbage collector'ı biz elle tetikleyebiliriz. 
+Ama bunun dışında çöp toplayıcının ne zaman devreye gireceğini bilemeyiz.
+
+  Final Anahtar Kelimesi: Final kelime anlamı olarak son demektir ve javada final anahtar kelimesi ile değişken, sınıf ve metot oluşturabiliriz.
+ 
+ Değişkenlerde Final: Final olarak tanımlanan bir değişkene bir kere değer atanır ve sonra başka bir değer atanamaz. Bundan dolayı sabit değerler final olarak tanımlanır.
+ Classlarda Final: Bir classı Final olarak tanımladığımızda o classtan başka classlar türetilemez. Math classı final olarak tanımlanmıştır ve math classından başka classlar
+		   türetemeyiz. (Extends edemeyiz)
+ Metotlarda Final: Bir class içindeki metotu Final olarak tanımlayabiliriz. Final olarak tanımlanan metotlar alt classlar tarafından override edilemez.
+ Not: Constructor final olamaz.
+
+ Not: Final tasarımsal istekleri sağladığı gibi (sabitleri final olarak tanımlama vs.) performans açısından verimlilik sağlar. Bir metotu final yaparsak o metot alt classlar
+tarafından override edilemeyecektir. Bundan dolayı late binding durumu söz konusu olmaz. Derleyici o metotu alt classlar tarafından override edilemeyeceği için direkt nesneye bağlar.
+Eğer classı final yaparsak performans çok daha artacaktır.
+
+ 
+
+
+
+ String Neden Immutable(Değişmez) Bir Classtır ?
+
+Not1: == operatoru: Degiskenlerin referanslarını kontrol eder.
+Not2: String pool, heap alanı içinde sadece string sabitleri tutan özel bir alandır.
+
+String özel bir classtır, referans tipli olmasına rağmen new kullanmayarakta bir String nesnesi oluşturabiliriz.
+
+String isim = "Kürşat";
+
+Biz yukarıdaki kodu yazdığımızda isim değişkeni için String Pool'da bir alan ayrılır, bu alana Kürşat yazılır ve isim değişkeni bu yerin adresini tutar.
+
+isim = "Memiş"; kodunu yukarıdaki koda eklersek; isim değişkeni için önceden ayrılmış olan alana Memiş yazmak yerine String pool'da yeni bir alan ayırır ve o alanın içine Memiş
+yazar. Hal böyle olunca biz String nesnesini aslında değiştiremedik. Sadece yeni bir alanda yeni bir değer yaratmış olduk. Bu yüzden String immutable(Değişmez) bir classtır.
+
+String name1 = "Kürşat";
+String name2 = "Kürşat";
+
+Yukarıdaki kod çalıştığı zaman String Pool'da bir alan ayrılır ve içine Kürşat değeri yazılır. name1 ve name2 değişkenleri de bu alanı gösterir.
+(name2 için yeni bir alan oluşturup içine Kürşat değerini yazmıyor. name1 için oluşturduğu alana name2 değişkenini referans tutuyor.)
+
+sout(name1 == name2); -> true ekrana basar.
+sout(name1.equals(name2)) -> true ekrana basar.
+
+String ad1 = new String("Kürşat");
+String ad2 = new String("Kürşat");
+
+Yukarıdaki ad1 ve ad2 değişkenleri, new String nesnesi oluşturulduğundan dolayı String Pool'da tutulmaz, normal nesneler gibi heapte tutulur.
+
+sout(ad1 == ad2) -> false ekrana basar.
+sout(ad1.equals(ad2)) -> true ekrana basar.
+
+ concat() metotu:
+
+String name = "Kürşat";
+String full_name = name.concat("Memiş"); -> name değişkeninin değerinin yanına "Memiş" ekledi ve ortaya çıkan bu yeni String değerini heapte yeni bir alan oluşturup
+ 					    o alanın içerisine attı. Bu alanın adresini de return etti. (full_name, bu alanın gösteriyor.)
+sout(full_name)-> KürşatMemiş ekrana basar.
+
+ intern() metotu: 
+
+String isim = new String("Kürşat"); -> Bu kod, heapte bir nesne oluşturur ve adresini isim değişkenine atar. Biz bu değeri String pool alanına
+taşımak istiyorsak kodumuzu;
+
+ String isim = new String("Kürşat").intern(); 
+şeklinde yazmalıyız. Böylece heapte 'Kürşat' nesnesi oluştu ve biz bunu intern metotu ile String pool'a taşıdık ve bu adreside isim degiskenine return ettik.
+(intern() metotu; üzerine uygulanan String değişkeni String Pool'da oluşturur ve bu adresi return eder. (Eğer bu string değer zaten String pool'da var ise direkt buranın adresini return eder.) )
+
+
+Sonrasında;
+String isim2 = "Kürşat"; denirse isim ve isim2 değişkenleri String pool'da aynı alanı gösterdiği için; 
+ sout(isim == isim2); -> ekrana true basar.
+
+
+
+
+
+
+
+
+
